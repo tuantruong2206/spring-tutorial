@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,8 +42,9 @@ public class EmployeeController {
     }
 
     @PostMapping("/employees")
-    public Employee createEmployee(@Valid @RequestBody Employee employee) {
-        return employeeRepository.save(employee);
+    public ResponseEntity<Employee> createEmployee(@Valid @RequestBody Employee employee) {
+
+        return new ResponseEntity<>(employeeRepository.save(employee), HttpStatus.CREATED);
     }
 
     @PutMapping("/employees/{id}")
